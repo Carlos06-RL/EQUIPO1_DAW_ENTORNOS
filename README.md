@@ -1,1 +1,1 @@
-Proyecto Sprint 2 html del trabajo de la asignatura Entornos.
+Proyecto de git en html de la asignatura Entornos.
