@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Equipos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { margin-bottom: 10px; }
+        input, select, button { margin: 5px 0; padding: 5px; width: 100%; }
+        .tab { display: none; }
+        .tab.active { display: block; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        nav button { margin: 0 5px; }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Equipos</h1>
+    <nav>
+        <button onclick="showTab('addPlayer')">Añadir Jugador</button>
+        <button onclick="showTab('addTeam')">Añadir Equipo</button>
+        <button onclick="showTab('assignTeam')">Asignar Equipo</button>
+    </nav>
+
+    <!-- Añadir Jugador -->
+    <div id="addPlayer" class="tab active">
+        <h2>Añadir Jugador</h2>
+        <label>Nombre:</label>
+        <input type="text" id="playerName" placeholder="Introduce el nombre">
+        <label>Edad:</label>
+        <input type="number" id="playerAge" placeholder="Introduce la edad">
+        <label>Idioma:</label>
+        <select id="playerLanguage">
+            <option>Inglés</option>
+            <option>Español</option>
+            <option>Alemán</option>
+            <option>Francés</option>
+        </select>
+        <button onclick="savePlayer()">Guardar Jugador</button>
+    </div>
+
+    <!-- Añadir Equipo -->
+    <div id="addTeam" class="tab">
+        <h2>Añadir Equipo</h2>
+        <label>Nombre del equipo:</label>
+        <input type="text" id="teamName" placeholder="Introduce el nombre del equipo">
+        <label>Ranking:</label>
+        <input type="number" id="teamRanking" min="0" max="10" placeholder="Introduce el ranking">
+        <button onclick="saveTeam()">Guardar Equipo</button>
+    </div>
+
+    <!-- Asignar Equipo -->
+    <div id="assignTeam" class="tab">
+        <h2>Asignar Equipo</h2>
+        <label>Nombre del jugador:</label>
+        <input type="text" id="assignPlayerName" placeholder="Introduce el nombre del jugador">
+        <label>Nombre del equipo:</label>
+        <input type="text" id="assignTeamName" placeholder="Introduce el nombre del equipo">
+        <button onclick="assignTeam()">Guardar Asignación</button>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function savePlayer() {
+            const name = document.getElementById('playerName').value;
+            const age = parseInt(document.getElementById('playerAge').value);
+            const language = document.getElementById('playerLanguage').value;
+
+            if (!/^[A-Za-z ]{4,20}$/.test(name)) {
+                alert('Nombre no válido. Debe tener entre 4 y 20 caracteres sin números.');
+                return;
+            }
+            if (isNaN(age) || age < 18) {
+                alert('Edad no válida. Debe ser mayor de 18 años.');
+                return;
+            }
+            alert('Jugador guardado correctamente: ' + name + ', ' + age + ', ' + language);
+        }
+
+        function saveTeam() {
+            const name = document.getElementById('teamName').value;
+            const ranking = parseInt(document.getElementById('teamRanking').value);
+
+            if (!/^[A-Za-z ]{4,20}$/.test(name)) {
+                alert('Nombre de equipo no válido. Debe tener entre 4 y 20 caracteres sin números.');
+                return;
+            }
+            if (isNaN(ranking) || ranking < 0 || ranking > 10) {
+                alert('Ranking no válido. Debe estar entre 0 y 10.');
+                return;
+            }
+            alert('Equipo guardado correctamente: ' + name + ', Ranking: ' + ranking);
+        }
+
+        function assignTeam() {
+            const playerName = document.getElementById('assignPlayerName').value;
+            const teamName = document.getElementById('assignTeamName').value;
+
+            if (!playerName || !teamName) {
+                alert('Ambos campos son obligatorios.');
+                return;
+            }
+            alert('Asignación guardada: ' + playerName + ' al equipo ' + teamName);
+        }
+    </script>
+</body>
+</html>
